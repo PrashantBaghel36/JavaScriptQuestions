@@ -3,7 +3,8 @@ const PART_TIME_HOURS = 4;
 const FULL_TIME_HOURS = 8;
 const WAGE_PER_HOUR = 20;
 const NO_WORK_HOURS = 0;
-const WORKING_DAYS_IN_MONTH = 20;
+const MAX_WORKING_DAYS = 20;
+const MAX_WORKING_HOURS = 160;
 
 // Function to get working hours for a day
 const getWorkHours = () => {
@@ -19,23 +20,37 @@ const getWorkHours = () => {
 // Function to calculate daily wage
 const calculateDailyWage = (workHours) => workHours * WAGE_PER_HOUR;
 
-// Function to calculate total wage for a month
-const calculateMonthlyWage = () => {
+// Function to calculate wages until conditions are met
+const calculateWages = () => {
     let totalWage = 0;
     let totalHours = 0;
-    
-    for (let day = 1; day <= WORKING_DAYS_IN_MONTH; day++) {
+    let totalDays = 0;
+
+    while (totalDays < MAX_WORKING_DAYS && totalHours < MAX_WORKING_HOURS) {
         let dailyHours = getWorkHours();
+        
+        // Ensure we don't exceed max hours
+        if (totalHours + dailyHours > MAX_WORKING_HOURS) {
+            dailyHours = MAX_WORKING_HOURS - totalHours;
+        }
+
         let dailyWage = calculateDailyWage(dailyHours);
         totalHours += dailyHours;
         totalWage += dailyWage;
-        console.log(`Day ${day}: Work Hours = ${dailyHours}, Daily Wage = $${dailyWage}`);
+        totalDays++;
+
+        console.log(`Day ${totalDays}: Work Hours = ${dailyHours}, Daily Wage = $${dailyWage}`);
+
+        // Stop if max working hours are reached
+        if (totalHours >= MAX_WORKING_HOURS) {
+            break;
+        }
     }
 
-    console.log(`\nTotal Work Hours in Month: ${totalHours}`);
+    console.log(`\nTotal Work Days: ${totalDays}`);
+    console.log(`Total Work Hours: ${totalHours}`);
     console.log(`Total Monthly Wage: $${totalWage}`);
-    return totalWage;
 };
 
 // Execute the program
-calculateMonthlyWage();
+calculateWages();
