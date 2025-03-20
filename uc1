@@ -1,0 +1,15 @@
+// Function to validate Email based on given conditions
+const validateEmail = (email) => {
+    const emailRegex = /^abc(\.[a-zA-Z0-9]+)?@bridgelabz\.co(\.[a-zA-Z]{2,})?$/;
+    return emailRegex.test(email);
+};
+
+// ✅ Test Cases
+console.log(validateEmail("abc@bridgelabz.co"));         // ✅ true (valid)
+console.log(validateEmail("abc.xyz@bridgelabz.co.in"));  // ✅ true (valid with optional parts)
+console.log(validateEmail("abc.pqr@bridgelabz.co.us"));  // ✅ true (valid with different optional parts)
+console.log(validateEmail("abc123@bridgelabz.co"));      // ✅ true (valid without optional parts)
+
+console.log(validateEmail("xyz@bridgelabz.co.in"));      
+console.log(validateEmail("abc.123@bridgelabz.co"));    
+
